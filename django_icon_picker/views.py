@@ -6,6 +6,7 @@ import requests
 import os
 
 def download_and_save_svg(request, svg_url):
+    id = request.GET.get('id')
     # Define the path where you want to save the SVG file
     save_path = getattr(settings, 'DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH')
 
@@ -16,7 +17,7 @@ def download_and_save_svg(request, svg_url):
     response = requests.get(svg_url)
     if response.status_code == 200:
         # Extract the filename from the URL
-        filename = os.path.basename(svg_url.split("/")[-1])
+        filename = os.path.basename(f"icon-{id}.svg")
         file_path = os.path.join(save_path, filename)
 
         # Save the SVG file

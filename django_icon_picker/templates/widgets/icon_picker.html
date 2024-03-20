@@ -2,10 +2,12 @@
 
 <div class="{{ widget.attrs.flex_class }}">
   <div>
+
     <div class="{{ widget.attrs.flex_input_class }}">
-        <img id="selectedIcon" class="{{ widget.attrs.selected_icon }}"></img>
+      <img id="selectedIcon" class="{{ widget.attrs.selected_icon }}"></img>
       {% include "django/forms/widgets/text.html" %}
       <div id="prefixDropdown"></div>
+      <input class="{{ widget.attrs.class }}" id="color" type="text" data-coloris>
     </div>
     <div
       id="results"
@@ -18,7 +20,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
         const selectedIcon = document.getElementById("selectedIcon");
-      selectedIcon.src = `https://api.iconify.design/${searchInput.value}.svg?color=grey`;
+      selectedIcon.src = `/${searchInput.value}`;
       const resultsDiv = document.getElementById("results");
       let selectedPrefix = "";
       
@@ -49,8 +51,9 @@
       if (data.icons.length > 0) {
         data.icons.forEach((icon) => {
           const iconName = icon.replace(":", "-");
-          const iconBaseUrl = ` https://api.iconify.design/${icon}.svg`
-          const iconUrl = `${iconBaseUrl}?color=grey`
+          const color = document.getElementById("color").value.replace("#","%23")
+          const iconBaseUrl = `https://api.iconify.design/${icon}.svg`
+          const iconUrl = `${iconBaseUrl}?color=${color}`
           const iconImg = document.createElement("img");
           iconImg.src = iconUrl;
           iconImg.className = "{{ widget.attrs.icons_class }}";
@@ -58,7 +61,7 @@
             searchInput.value = iconName;
             resultsDiv.innerHTML = "";
             selectedIcon.src = iconUrl;
-            // downloadAndSaveSvg(iconBaseUrl);
+            downloadAndSaveSvg(iconUrl);
           });
           
           resultsDiv.appendChild(iconImg);
@@ -95,10 +98,8 @@
       dropdownContainer.appendChild(selectElement);
     }
     function downloadAndSaveSvg(svgUrl) {
-        // Construct the URL to the Django view
-        var downloadUrl = "/download-svg/" + encodeURIComponent(svgUrl) + "/";
 
-        // Make an AJAX request to the Django view
+        var downloadUrl = "/download-svg/" + encodeURIComponent(svgUrl) + "/?id={{ widget.attrs.objectid }}";
         fetch(downloadUrl)
             .then(response => response.text())
             .then(data => {
@@ -108,6 +109,5 @@
                 console.error('Error:', error);
             });
     }
-    
     fetchIconifyPrefixes();
 </script>

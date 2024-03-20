@@ -16,11 +16,10 @@
   </div>
 </div>
 <script>
-        const searchInput = document.getElementById("{{ widget.attrs.id }}");
-
+  const searchInput = document.getElementById("{{ widget.attrs.id }}");
   document.addEventListener("DOMContentLoaded", function () {
         const selectedIcon = document.getElementById("selectedIcon");
-      selectedIcon.src = `/${searchInput.value}`;
+      selectedIcon.src = "{{ save_path }}" ? `/${searchInput.value}` : `https://api.iconify.design/${searchInput.value}.svg`;
       const resultsDiv = document.getElementById("results");
       let selectedPrefix = "";
       
@@ -61,7 +60,9 @@
             searchInput.value = iconName;
             resultsDiv.innerHTML = "";
             selectedIcon.src = iconUrl;
-            downloadAndSaveSvg(iconUrl);
+            if("{{ save_path }}"){
+              downloadAndSaveSvg(iconUrl);
+            }
           });
           
           resultsDiv.appendChild(iconImg);

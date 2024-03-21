@@ -10,6 +10,11 @@ Django Icon Picker is a custom widget for Django forms that allows users to sele
 - **Icon ID Support**: If the `DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH` is not defined, the Icon Picker will store the ID of the selected icon in the `icon` field.
 - **Easy Integration**: Use the `IconPicker` widget as a model field widget in your Django forms.
 
+## Screenshot
+
+![](icon_picker.gif)
+
+
 ## Usage
 
 ### Step 1: Install Django Icon Picker

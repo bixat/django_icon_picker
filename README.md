@@ -36,9 +36,22 @@ To use the IconPicker widget in your forms, simply specify it as the widget for 
 ```python
 from django import forms
 from django_icon_picker.widgets import IconPicker
+from .models import AttributeItem
 
-class MyForm(forms.ModelForm):
-    icon = forms.CharField(widget=IconPicker)
+class AttributeItemForm(forms.ModelForm):
+    icon = forms.CharField(widget=IconPicker())
+
+    # is required for download svg file approach
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['icon'].widget.attrs['model'] = self._meta.model.__name__
+        if self.instance and self.instance.pk:
+            object_id = self.instance.pk
+            self.fields['icon'].widget.attrs['objectid'] = object_id
+        else:
+            last_item_id = AttributeItem.objects.last().id if AttributeItem.objects.exists() else 1
+            next_id = last_item_id + 1
+            self.fields['icon'].widget.attrs['objectid'] = next_id
 ```
 
 ### Step 4: Override IconPicker Styling

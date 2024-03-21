@@ -2,17 +2,20 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-icon-picker',
-    version='0.1',
+    version='0.0.1',
+    description='A custom widget for Django forms that allows users to select icons from a predefined set.',
+    author='Mohammed CHAHBOUN',
+    author_email='m97.chahboun@gmail.com',
+    url='https://github.com/bixat/django_icon_picker',
     packages=find_packages(),
-    include_package_data=True,
     install_requires=[
-        'Django>=3.2',
+        'Django>=3.0',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 3.2',
+        'Framework :: Django :: 3.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',

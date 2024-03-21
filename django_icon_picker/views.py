@@ -5,9 +5,12 @@ from django.conf import settings
 import requests
 import os
 
-def download_and_save_svg(request, svg_url):
+def download_and_save_svg(request):
         model = request.GET.get('model')
         if request.user.is_superuser or request.user.has_perm(f'edit_{model}'):
+            svg_icon = request.GET.get('icon')
+            color = request.GET.get('color').replace("#","%23")
+            svg_url = f"https://api.iconify.design/{svg_icon}?color={color}"
             id = request.GET.get('id')
             # Define the path where you want to save the SVG file
             save_path = getattr(settings, 'DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH')

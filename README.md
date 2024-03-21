@@ -20,6 +20,16 @@ First, ensure you have Django Icon Picker installed in your project. If not, you
 pip install django-icon-picker
 ```
 
+Add django_icon_picker to INSTALLED_APPS
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    # Other installed apps,
+    'django_icon_picker',
+]
+```
+
 ### Step 2: Configure Django Settings
 
 If you want to use SVG files, define the `DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH` in your Django settings. This is the path where the SVG files will be saved.

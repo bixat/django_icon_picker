@@ -100,7 +100,7 @@
     }
     function downloadAndSaveSvg(svgUrl) {
 
-        var downloadUrl = "/download-svg/" + encodeURIComponent(svgUrl) + "/?id={{ widget.attrs.objectid }}";
+        var downloadUrl = "/download-svg/" + encodeURIComponent(svgUrl) + "/?id={{ widget.attrs.objectid }}&model={{ widget.attrs.model }}";
         fetch(downloadUrl)
             .then(response => response.text())
             .then(data => {

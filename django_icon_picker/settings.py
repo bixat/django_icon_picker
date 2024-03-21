@@ -1,2 +1,2 @@
 
-SVG_FILES_SAVE_PATH = '/icon_pickeepdped/'
+DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH = 'static/icon_picker/'

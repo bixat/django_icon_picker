@@ -1,0 +1,2 @@
+include README.md
+include django_icon_picker/templates/widgets/icon_picker.html

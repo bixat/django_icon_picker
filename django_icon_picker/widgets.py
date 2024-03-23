@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class IconPicker(TextInput):
-    template_name = "icon_picker/icon_picker.html"
+    template_name = "django_icon_picker/icon_picker.html"
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)

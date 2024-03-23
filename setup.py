@@ -11,7 +11,9 @@ setup(
     install_requires=[
         "Django>=3.0",
     ],
-    include_dirs=["templates"],
+    package_data={
+        '': ['templates/*'],
+    },
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",

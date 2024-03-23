@@ -61,7 +61,7 @@
             resultsDiv.innerHTML = "";
             selectedIcon.src = iconUrl;
             if("{{ save_path }}"){
-              downloadAndSaveSvg(iconUrl);
+              downloadAndSaveSvg(`${icon}.svg&color=${color}`);
             }
           });
           
@@ -98,9 +98,8 @@
 
       dropdownContainer.appendChild(selectElement);
     }
-    function downloadAndSaveSvg(svgUrl) {
-
-        var downloadUrl = "/download-svg/" + encodeURIComponent(svgUrl) + "/?id={{ widget.attrs.objectid }}&model={{ widget.attrs.model }}";
+    function downloadAndSaveSvg(svgIcon) {
+        var downloadUrl = `/download-svg/?icon=${svgIcon}&id={{ widget.attrs.objectid }}&model={{ widget.attrs.model }}`;
         fetch(downloadUrl)
             .then(response => response.text())
             .then(data => {

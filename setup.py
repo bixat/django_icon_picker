@@ -12,7 +12,7 @@ setup(
         "Django>=3.0",
     ],
     package_data={
-        '': ['templates/*'],
+        '': ['django_icon_picker/templates/**'],
     },
     classifiers=[
         "Development Status :: 3 - Alpha",

@@ -35,6 +35,16 @@ INSTALLED_APPS = [
 ]
 ```
 
+Update `url.py`, required for download svg file case
+
+```python
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    ## Add icon_pcker urls
+    path("", include("django_icon_picker.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
 ### Step 2: Configure Django Settings
 
 If you want to use SVG files, define the `DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH` in your Django settings. This is the path where the SVG files will be saved.

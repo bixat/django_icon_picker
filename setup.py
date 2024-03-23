@@ -11,9 +11,8 @@ setup(
     install_requires=[
         "Django>=3.0",
     ],
-    include_dirs=['django_icon_picker/templates/'],
     package_data={
-        '': ['django_icon_picker/templates/**'],
+        'django_icon_picker': ['templates/django_icon_picker/icon_picker.html'],
     },
     classifiers=[
         "Development Status :: 3 - Alpha",

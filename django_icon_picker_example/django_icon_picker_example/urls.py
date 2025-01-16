@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("icon_picker/", include('django_icon_picker.urls')),
+    path("icon_picker/", include("django_icon_picker.urls")),
 ]
 
 if settings.DEBUG:

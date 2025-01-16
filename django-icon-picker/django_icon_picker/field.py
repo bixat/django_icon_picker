@@ -6,12 +6,9 @@ class IconField(models.CharField):
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 255
-        # kwargs['form_field'] = self.formfield
         super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         attrs = {'model_name': self.model.__name__.lower()}
         kwargs['widget'] = IconPicker(attrs=attrs)
-        # print(self.__dir__())
-        # print()
         return super().formfield(**kwargs)

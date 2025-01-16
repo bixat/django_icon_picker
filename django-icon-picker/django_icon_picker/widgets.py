@@ -8,7 +8,6 @@ class IconPicker(Widget):
     
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
-        print(context)
         try:
             context["save_path"] = getattr(settings, "DJANGO_ICON_PICKER_PATH")
         except:
@@ -17,7 +16,6 @@ class IconPicker(Widget):
         context.update({
             'object_id': str(uuid.uuid4()),
         })
-        print(context)
         return context
 
     class Media:

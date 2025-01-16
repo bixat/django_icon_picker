@@ -22,13 +22,12 @@ class IconPicker {
   }
 
   setupInitialIcon() {
-    this.selectedIcon.src = this.savePath
+    this.selectedIcon.src = this.searchInput.value.endsWith(".svg")
       ? `/${this.searchInput.value}`
       : `https://api.iconify.design/${this.searchInput.value}.svg`;
   }
 
   setupEventListeners() {
-    console.log(this.form);
     this.prefixDropdown.addEventListener("change", (event) => {
       this.selectedPrefix = event.target.value;
     });
@@ -101,11 +100,12 @@ class IconPicker {
       this.selectedIcon.src = iconUrl;
       this.resultsDiv.innerHTML = "";
       this.icon = this.searchInput.value;
-      this.searchInput.value =
-        this.savePath + `/${this.model}/icon-${this.objectId}.svg`;
-      // if (this.savePath) {
-      //   this.downloadAndSaveSvg(`${icon}.svg&color=${this.colorPicker.value.replace("#", "%23")}`);
-      // }
+      if (this.savePath) {
+        this.searchInput.value =
+          this.savePath + `/${this.model}/icon-${this.objectId}.svg`;
+      } else {
+        this.searchInput.value = icon;
+      }
     });
 
     return item;

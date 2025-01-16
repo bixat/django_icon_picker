@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-
 class DjangoIconPickerConfig(AppConfig):
-    name = "django_icon_picker"
-    static_url = "/static/"
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'django_icon_picker'
+    verbose_name = 'Django Icon Picker'

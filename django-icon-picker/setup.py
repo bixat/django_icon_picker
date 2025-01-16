@@ -7,6 +7,7 @@ setup(
     author="Mohammed CHAHBOUN",
     author_email="m97.chahboun@gmail.com",
     url="https://github.com/bixat/django_icon_picker",
+    include_package_data=True,
     packages=find_packages(),
     install_requires=[
         "Django>=3.0",

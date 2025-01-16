@@ -1,26 +1,33 @@
-from django.forms import TextInput
+from django.forms import Widget
 from django.conf import settings
+import uuid
 
 
-class IconPicker(TextInput):
+class IconPicker(Widget):
     template_name = "django_icon_picker/icon_picker.html"
-
+    
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
+        print(context)
         try:
-            context["save_path"] = getattr(
-                settings, "DJANGO_ICON_PICKER_SVG_FILES_SAVE_PATH"
-            )
+            context["save_path"] = getattr(settings, "DJANGO_ICON_PICKER_PATH")
         except:
             pass
+
+        context.update({
+            'object_id': str(uuid.uuid4()),
+        })
+        print(context)
         return context
 
     class Media:
         css = {
             "all": (
                 "https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css",
+                "django_icon_picker/css/icon_picker.css"
             )
         }
         js = (
             "https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js",
+            "django_icon_picker/js/icon_picker.js"
         )

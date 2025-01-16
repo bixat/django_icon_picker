@@ -1,113 +1,26 @@
 {% load static %}
 
-<div class="{{ widget.attrs.flex_class }}">
-  <div>
+<link rel="stylesheet" href="{% static 'django_icon_picker/css/icon_picker.css' %}">
 
-    <div class="{{ widget.attrs.flex_input_class }}">
-      <img id="selectedIcon" class="{{ widget.attrs.selected_icon }}"></img>
+<div class="icon-picker-container">
+  <div class="icon-picker-wrapper">
+    <div class="icon-picker-input" style="display: flex; align-items: center;">
+      <img class="icon-preview" id="selectedIcon" class="{{ widget.attrs.selected_icon }}" style="margin-right: 10px;">
       {% include "django/forms/widgets/text.html" %}
-      <div id="prefixDropdown"></div>
-      <input class="{{ widget.attrs.class }}" id="color" type="text" data-coloris>
+      <div id="prefixDropdown" style="margin-left: 10px;"></div>
+      <input class="{{ widget.attrs.class }}" id="color" type="text" data-coloris style="margin-left: 10px;">
     </div>
-    <div
-      id="results"
-      class="{{ widget.attrs.result_class }}"
-    ></div>
+    <div id="results" class="{{ widget.attrs.result_class }}"></div>
   </div>
 </div>
+<script src="{% static 'django_icon_picker/js/icon_picker.js' %}"></script>
 <script>
-  const searchInput = document.getElementById("{{ widget.attrs.id }}");
   document.addEventListener("DOMContentLoaded", function () {
-        const selectedIcon = document.getElementById("selectedIcon");
-      selectedIcon.src = "{{ save_path }}" ? `/${searchInput.value}` : `https://api.iconify.design/${searchInput.value}.svg`;
-      const resultsDiv = document.getElementById("results");
-      let selectedPrefix = "";
-      
-      document
-        .getElementById("prefixDropdown")
-        .addEventListener("change", function (event) {
-          selectedPrefix = event.target.value;
-        });
-      searchInput.addEventListener("input", function () {
-        const query = searchInput.value;
-        if (query.length > 2) {
-          searchIcons(query, resultsDiv, selectedPrefix);
-        } else {
-          resultsDiv.innerHTML = "";
-        }
-      });
+    new IconPicker({
+      searchInputId: "{{ widget.attrs.id }}",
+      savePath: "{{ save_path }}",
+      model: "{{ widget.attrs.model_name }}",
+      objectId: "{{ object_id }}"
     });
-
-    async function searchIcons(query, resultsDiv, selectedPrefix) {
-      const response = await fetch(
-        `https://api.iconify.design/search?query=${encodeURIComponent(
-          query
-        )}&limit=10&start=0&prefix=${selectedPrefix}`
-      );
-      const data = await response.json();
-
-      resultsDiv.innerHTML = "";
-      if (data.icons.length > 0) {
-        data.icons.forEach((icon) => {
-          const iconName = icon.replace(":", "-");
-          const color = document.getElementById("color").value.replace("#","%23")
-          const iconBaseUrl = `https://api.iconify.design/${icon}.svg`
-          const iconUrl = `${iconBaseUrl}?color=${color}`
-          const iconImg = document.createElement("img");
-          iconImg.src = iconUrl;
-          iconImg.className = "{{ widget.attrs.icons_class }}";
-          iconImg.addEventListener("click", function () {
-            searchInput.value = iconName;
-            resultsDiv.innerHTML = "";
-            selectedIcon.src = iconUrl;
-            if("{{ save_path }}"){
-              downloadAndSaveSvg(`${icon}.svg&color=${color}`);
-            }
-          });
-          
-          resultsDiv.appendChild(iconImg);
-        });
-      } else {
-        resultsDiv.textContent = "No icons found.";
-      }
-    }
-    function fetchIconifyPrefixes() {
-      fetch("https://api.iconify.design/collections?pretty=1")
-        .then((response) => response.json())
-        .then((data) => {
-          const prefixes = Object.keys(data);
-          populatePrefixDropdown(prefixes);
-        })
-        .catch((error) => console.error("Error fetching icon sets:", error));
-    }
-
-    function populatePrefixDropdown(prefixes) {
-      const dropdownContainer = document.getElementById(
-        "prefixDropdown"
-      );
-      const selectElement = document.createElement("select");
-      selectElement.id = "prefixDropdown";
-      selectElement.className = "form-select block {{ widget.attrs.class }}";
-
-      prefixes.forEach((prefix) => {
-        const option = document.createElement("option");
-        option.value = prefix;
-        option.textContent = prefix;
-        selectElement.appendChild(option);
-      });
-
-      dropdownContainer.appendChild(selectElement);
-    }
-    function downloadAndSaveSvg(svgIcon) {
-        var downloadUrl = `/download-svg/?icon=${svgIcon}&id={{ widget.attrs.objectid }}&model={{ widget.attrs.model }}`;
-        fetch(downloadUrl)
-            .then(response => response.text())
-            .then(data => {
-              searchInput.value = data;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-    fetchIconifyPrefixes();
+  });
 </script>

@@ -1,2 +1,5 @@
 include README.md
-include django_icon_picker/templates/django_icon_picker/icon_picker.html
+recursive-include django_icon_picker/static *
+recursive-include django_icon_picker/templates *
+ecursive-exclude * *.pyc
+exclude icon_picker.gif

@@ -4,3 +4,4 @@
 django_icon_picker_example/db.sqlite3
 django-icon-picker/build/**
 django-icon-picker/django_icon_picker.egg-info/**
+django_icon_picker_example/media/**

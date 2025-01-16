@@ -1,0 +1,31 @@
+.icon-dropdown-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.icon-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.icon-dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.icon-preview {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+}
+
+.icon-name {
+    font-size: 14px;
+    color: #333;
+}

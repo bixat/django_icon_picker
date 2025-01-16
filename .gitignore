@@ -1,3 +1,6 @@
 .DS_Store
-django_icon_picker/__pycache__/**
 .vscode/branch-timer.json
+**/__pycache__/
+django_icon_picker_example/db.sqlite3
+django-icon-picker/build/**
+django-icon-picker/django_icon_picker.egg-info/**

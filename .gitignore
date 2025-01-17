@@ -6,3 +6,4 @@ django-icon-picker/build/**
 django-icon-picker/django_icon_picker.egg-info/**
 django_icon_picker_example/media/**
 django-icon-picker/dist/**
+**/.venv/

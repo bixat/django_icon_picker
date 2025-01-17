@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="django-icon-picker",
     version="1.0.1",
-    description="A custom widget for Django forms that allows users to select icons from a predefined set.",
+    description="A custom Django model field that allows users to select icons from a predefined set.",
     author="Mohammed CHAHBOUN",
     author_email="m97.chahboun@gmail.com",
     url="https://github.com/bixat/django_icon_picker",

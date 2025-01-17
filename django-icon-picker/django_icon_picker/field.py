@@ -2,7 +2,6 @@
 from django.db import models
 from .widgets import IconPicker
 from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 import os
 
 class IconField(models.CharField):

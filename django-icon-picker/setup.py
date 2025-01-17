@@ -1,14 +1,20 @@
 from setuptools import setup, find_packages
 
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 setup(
     name="django-icon-picker",
-    version="1.0.0",
-    description="A custom widget for Django forms that allows users to select icons from a predefined set.",
+    version="1.0.1",
+    description="A custom Django model field that allows users to select icons from a predefined set.",
     author="Mohammed CHAHBOUN",
     author_email="m97.chahboun@gmail.com",
     url="https://github.com/bixat/django_icon_picker",
     include_package_data=True,
     packages=find_packages(),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     install_requires=[
         "Django>=3.0",
     ],

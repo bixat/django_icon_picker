@@ -58,6 +58,9 @@ If you want to use SVG files, define the `ICON_PICKER_PATH` in your Django setti
 ```python
 # settings.py
 ICON_PICKER_PATH = 'media'
+
+# default icon color
+ICON_PICKER_COLOR = "#00bcc9"
 ```
 
 ### Step 3: Override IconPicker Styling

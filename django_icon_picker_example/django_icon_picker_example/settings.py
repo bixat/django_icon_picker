@@ -123,7 +123,9 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
-DJANGO_ICON_PICKER_PATH = "media"
+ICON_PICKER_PATH = "media"
+ICON_PICKER_COLOR = "#00bcc9"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

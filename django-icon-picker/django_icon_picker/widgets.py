@@ -18,10 +18,15 @@ class IconPicker(Widget):
         self.get_settings_attr(context, "default_color", "ICON_PICKER_COLOR")
         context.update(
             {
-                "object_id": str(uuid.uuid4()),
+                "object_id": self.get_object_id(value),
             }
         )
         return context
+
+    def get_object_id(self, value):
+        if value:
+            return value.split("/")[-1].split(".")[0].replace("icon-", "")
+        return str(uuid.uuid4())
 
     class Media:
         css = {

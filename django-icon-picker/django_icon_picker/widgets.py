@@ -5,7 +5,7 @@ import uuid
 
 class IconPicker(Widget):
     template_name = "django_icon_picker/icon_picker.html"
-    
+
     def get_settings_attr(self, context, key, attr):
         try:
             context[key] = getattr(settings, attr)

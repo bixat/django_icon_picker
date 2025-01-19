@@ -14,7 +14,7 @@ def download_and_save_svg(request):
         svg_url = f"https://api.iconify.design/{svg_icon}?color={color}"
         id = request.GET.get("id")
         # Define the path where you want to save the SVG file
-        save_path = getattr(settings, "DJANGO_ICON_PICKER_PATH")
+        save_path = getattr(settings, "ICON_PICKER_PATH")
 
         save_path = f"{save_path}/{model}"
         # Ensure the save path exists

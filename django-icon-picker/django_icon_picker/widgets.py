@@ -6,13 +6,16 @@ import uuid
 class IconPicker(Widget):
     template_name = "django_icon_picker/icon_picker.html"
 
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
+    def get_settings_attr(self, context, key, attr):
         try:
-            context["save_path"] = getattr(settings, "DJANGO_ICON_PICKER_PATH")
+            context[key] = getattr(settings, attr)
         except:
             pass
 
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        self.get_settings_attr(context, "save_path", "ICON_PICKER_PATH")
+        self.get_settings_attr(context, "default_color", "ICON_PICKER_COLOR")
         context.update(
             {
                 "object_id": str(uuid.uuid4()),

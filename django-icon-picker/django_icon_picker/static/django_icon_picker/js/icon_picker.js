@@ -3,7 +3,6 @@ class IconPicker {
     this.searchInput = document.getElementById(options.searchInputId);
     this.selectedIcon = document.getElementById("selectedIcon");
     this.resultsDiv = document.getElementById("results");
-    this.prefixDropdown = document.getElementById("prefixDropdown");
     this.colorPicker = document.getElementById("color");
     this.savePath = options.savePath;
     this.selectedPrefix = "";
@@ -18,7 +17,6 @@ class IconPicker {
   init() {
     this.setupInitialIcon();
     this.setupEventListeners();
-    this.fetchIconifyPrefixes();
   }
 
   setupInitialIcon() {
@@ -28,10 +26,6 @@ class IconPicker {
   }
 
   setupEventListeners() {
-    this.prefixDropdown.addEventListener("change", (event) => {
-      this.selectedPrefix = event.target.value;
-    });
-
     this.searchInput.addEventListener("input", () => {
       const query = this.searchInput.value;
       if (query.length > 2) {
@@ -82,7 +76,7 @@ class IconPicker {
 
   createDropdownItem(icon, iconUrl) {
     const item = document.createElement("div");
-    item.className = "icon-dropdown-item";
+    item.className = "icon-dropdown-item" 
 
     const iconImg = document.createElement("img");
     iconImg.src = iconUrl;
@@ -109,31 +103,6 @@ class IconPicker {
     });
 
     return item;
-  }
-
-  fetchIconifyPrefixes() {
-    fetch("https://api.iconify.design/collections?pretty=1")
-      .then((response) => response.json())
-      .then((data) => {
-        const prefixes = Object.keys(data);
-        this.populatePrefixDropdown(prefixes);
-      })
-      .catch((error) => console.error("Error fetching icon sets:", error));
-  }
-
-  populatePrefixDropdown(prefixes) {
-    const selectElement = document.createElement("select");
-    selectElement.id = "prefixDropdown";
-    selectElement.className = "form-select block";
-
-    prefixes.forEach((prefix) => {
-      const option = document.createElement("option");
-      option.value = prefix;
-      option.textContent = prefix;
-      selectElement.appendChild(option);
-    });
-
-    this.prefixDropdown.appendChild(selectElement);
   }
 
   downloadAndSaveSvg(svgIcon) {

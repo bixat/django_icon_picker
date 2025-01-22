@@ -1,46 +1,60 @@
 .icon-dropdown-list {
-    max-height: 300px;
-    max-width: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-height: 300px;
+  max-width: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.dark .icon-dropdown-list  {
-    background: #333;
-    border: 1px solid #333;
+.dark .icon-dropdown-list {
+  background: #333;
+  border: 1px solid #333;
+}
+
+[data-theme="dark"] .icon-dropdown-list {
+  background: #333;
+  border: 1px solid #333;
 }
 
 .icon-dropdown-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .icon-dropdown-item:hover {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .dark .icon-dropdown-item:hover {
-    background-color: #333;
+  background-color: #333;
+}
+
+[data-theme="dark"] .icon-dropdown-item:hover {
+  background-color: #333;
 }
 
 .icon-preview {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
 }
 
 .icon-name {
-    font-size: 14px;
-    color: #333;
+  font-size: 14px;
+  color: #333;
 }
 
 .dark .icon-name {
-    font-size: 14px;
-    color: #fff;
+  font-size: 14px;
+  color: #fff;
+}
+
+[data-theme="dark"] .icon-name {
+  font-size: 14px;
+  color: #fff;
 }

@@ -7,10 +7,9 @@
     <div class="icon-picker-input" style="display: flex; align-items: center;">
       <img class="icon-preview" id="selectedIcon" class="{{ widget.attrs.selected_icon }}" style="margin-right: 10px;">
       {% include "django/forms/widgets/text.html" %}
-      <div id="prefixDropdown" style="margin-left: 10px;"></div>
       <input class="{{ widget.attrs.class }}" id="color" value="{{ default_color|default:"#006166" }}" type="text" data-coloris style="margin-left: 10px;">
     </div>
-    <div id="results" class="{{ widget.attrs.result_class }}"></div>
+    <div id="results"></div>
   </div>
 </div>
 <script src="{% static 'django_icon_picker/js/icon_picker.js' %}"></script>
@@ -20,7 +19,7 @@
       searchInputId: "{{ widget.attrs.id }}",
       savePath: "{{ save_path }}",
       model: "{{ widget.attrs.model_name }}",
-      objectId: "{{ object_id }}"
+      objectId: "{{ object_id }}",
     });
   });
 </script>

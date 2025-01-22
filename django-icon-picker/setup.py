@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="django-icon-picker",
-    version="1.0.1",
+    version="1.0.2",
     description="A custom Django model field that allows users to select icons from a predefined set.",
     author="Mohammed CHAHBOUN",
     author_email="m97.chahboun@gmail.com",

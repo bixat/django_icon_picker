@@ -13,7 +13,9 @@ class IconField(models.CharField):
         super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
-        attrs = {"model_name": self.model.__name__.lower()}
+        widget = kwargs.get('widget')
+        attrs = widget().attrs if widget else {}
+        attrs.update({"model_name": self.model.__name__.lower()})
         kwargs["widget"] = IconPicker(attrs=attrs)
         return super().formfield(**kwargs)
 

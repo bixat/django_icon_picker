@@ -1,10 +1,16 @@
 .icon-dropdown-list {
     max-height: 300px;
+    max-width: 300px;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 4px;
     background: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dark .icon-dropdown-list  {
+    background: #333;
+    border: 1px solid #333;
 }
 
 .icon-dropdown-item {
@@ -19,6 +25,10 @@
     background-color: #f5f5f5;
 }
 
+.dark .icon-dropdown-item:hover {
+    background-color: #333;
+}
+
 .icon-preview {
     width: 24px;
     height: 24px;
@@ -28,4 +38,9 @@
 .icon-name {
     font-size: 14px;
     color: #333;
+}
+
+.dark .icon-name {
+    font-size: 14px;
+    color: #fff;
 }

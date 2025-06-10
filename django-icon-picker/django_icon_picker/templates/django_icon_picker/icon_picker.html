@@ -4,22 +4,73 @@
 
 <div class="icon-picker-container">
   <div class="icon-picker-wrapper">
-    <div class="icon-picker-input" style="display: flex; align-items: center;">
-      <img class="icon-preview" id="selectedIcon" class="{{ widget.attrs.selected_icon }}" style="margin-right: 10px;">
+    <div class="icon-picker-input" style="display: flex; align-items: center; gap: 10px;">
+      <!-- Fixed: Removed duplicate class attribute, added alt text and proper class merging -->
+      <img 
+        class="icon-preview {{ widget.attrs.selected_icon|default:'' }}" 
+        id="selectedIcon" 
+        alt="Selected icon preview"
+        style="margin-right: 10px; width: 24px; height: 24px; object-fit: contain;"
+        aria-label="Preview of selected icon">
+      
+      <!-- Main text input for icon search -->
       {% include "django/forms/widgets/text.html" %}
-      <input class="{{ widget.attrs.class }}" id="color" value="{{ default_color|default:"#006166" }}" type="text" data-coloris style="margin-left: 10px;">
+      
+      <!-- Color picker input with improved attributes -->
+      <input 
+        class="{{ widget.attrs.class|default:'' }}" 
+        id="color" 
+        name="icon_color"
+        value="{{ default_color|default:'#00bcc9' }}" 
+        type="text" 
+        data-coloris 
+        style="margin-left: 10px; min-width: 80px;"
+        aria-label="Icon color picker"
+        title="Select icon color"
+        placeholder="#00bcc9">
     </div>
-    <div id="results"></div>
+    
+    <!-- Results container with better accessibility -->
+    <div 
+      id="results" 
+      class="icon-search-results"
+      role="listbox"
+      aria-label="Icon search results"
+      aria-live="polite">
+    </div>
+    
+    <!-- Error message container -->
+    <div 
+      id="icon-picker-error" 
+      class="icon-picker-error" 
+      style="display: none; color: #dc3545; margin-top: 5px;"
+      role="alert"
+      aria-live="assertive">
+    </div>
   </div>
 </div>
+
 <script src="{% static 'django_icon_picker/js/icon_picker.js' %}"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    new IconPicker({
-      searchInputId: "{{ widget.attrs.id }}",
-      savePath: "{{ save_path }}",
-      model: "{{ widget.attrs.model_name }}",
-      objectId: "{{ object_id }}",
-    });
+    try {
+      // Enhanced initialization with error handling
+      new IconPicker({
+        searchInputId: "{{ widget.attrs.id }}",
+        savePath: "{{ save_path|default:'' }}",
+        model: "{{ widget.attrs.model_name|default:'' }}",
+        objectId: "{{ object_id|default:'' }}",
+        defaultColor: "{{ default_color|default:'#00bcc9' }}"
+      });
+    } catch (error) {
+      console.error("Failed to initialize IconPicker:", error);
+      
+      // Show user-friendly error message
+      const errorDiv = document.getElementById("icon-picker-error");
+      if (errorDiv) {
+        errorDiv.textContent = "Failed to load icon picker. Please refresh the page.";
+        errorDiv.style.display = "block";
+      }
+    }
   });
 </script>

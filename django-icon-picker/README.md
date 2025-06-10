@@ -1,4 +1,4 @@
-# Django Icon Picker README
+# Django Icon Picker
 
 ## Overview
 
@@ -6,15 +6,15 @@ Django Icon Picker is a custom Django model field that allows users to select ic
 
 ## Features
 
-- **SVG File Support**: If the `ICON_PICKER_PATH` is defined in your Django settings, the Icon Picker will download the selected SVG file and save it to the specified path. The path to the saved SVG file will be stored in the `in=con` field of the form.
+- **SVG File Support**: If the `ICON_PICKER_PATH` is defined in your Django settings, the Icon Picker will download the selected SVG file and save it to the specified path. The path to the saved SVG file will be stored in the `icon` field of the form.
 - **Icon ID Support**: If the `ICON_PICKER_PATH` is not defined, the Icon Picker will store the ID of the selected icon in the `icon` field.
 - **Easy Integration**: Use the `IconPicker` widget as a model field widget in your Django forms.
 
 ## Screenshot
 
-![](icon_picker.gif)
+![Django Icon Picker Demo](icon_picker.gif)
 
-## Usage
+## Installation & Usage
 
 ### Step 1: Install Django Icon Picker
 
@@ -24,17 +24,17 @@ First, ensure you have Django Icon Picker installed in your project. If not, you
 pip install django-icon-picker
 ```
 
-Add django_icon_picker to INSTALLED_APPS
+Add `django_icon_picker` to `INSTALLED_APPS`:
 
 ```python
 # settings.py
 INSTALLED_APPS = [
-    # Other installed apps,
+    # Other installed apps...
     'django_icon_picker',
 ]
 ```
 
-Update `url.py`, required for download svg file case
+Update `urls.py` (required for SVG file download functionality):
 
 ```python
 from django.contrib import admin
@@ -59,11 +59,11 @@ If you want to use SVG files, define the `ICON_PICKER_PATH` in your Django setti
 # settings.py
 ICON_PICKER_PATH = 'media'
 
-# default icon color
+# Default icon color
 ICON_PICKER_COLOR = "#00bcc9"
 ```
 
-### Step 3: Use IconField on your model
+### Step 3: Use IconField in your model
 
 ```python
 from django.db import models
@@ -76,16 +76,37 @@ class ExampleModel(models.Model):
 
     def svg_icon(self):
         return format_html(
-            '<img src="{}" height="30" width="30"/>'.format(
+            '<img src="{}" height="30" width="30" alt="{}"/>'.format(
                 f"/{self.icon}"
                 if self.icon.endswith(".svg")
-                else f"https://api.iconify.design/{self.icon}.svg"
+                else f"https://api.iconify.design/{self.icon}.svg",
+                f"Icon for {self.name}"
             )
         )
 
     def __str__(self):
-        return self.icon
+        return self.name
 ```
+
+## Configuration Options
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `ICON_PICKER_PATH` | `None` | Path where SVG files will be saved. If not defined, only icon IDs are stored. |
+| `ICON_PICKER_COLOR` | `"#00bcc9"` | Default color for icons |
+
+## Requirements
+
+- Django >= 3.0
+- Python >= 3.6
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Conclusion
 

@@ -5,47 +5,37 @@
 <div class="icon-picker-container">
   <div class="icon-picker-wrapper">
     <div class="icon-picker-input" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Fixed: Removed duplicate class attribute, added alt text and proper class merging -->
-      <img 
-        class="icon-preview {{ widget.attrs.selected_icon|default:'' }}" 
-        id="selectedIcon" 
+      <!-- Icon preview with better handling for different storage types -->
+      <img class="icon-preview {{ widget.attrs.selected_icon|default:'' }}" id="selectedIcon"
         alt="Selected icon preview"
-        style="margin-right: 10px; width: 24px; height: 24px; object-fit: contain;"
-        aria-label="Preview of selected icon">
-      
-      <!-- Main text input for icon search -->
+        style="margin-right: 10px; width: 24px; height: 24px; object-fit: contain; border: 1px solid #ddd; border-radius: 3px; padding: 2px;"
+        aria-label="Preview of selected icon" title="Selected icon preview">
+
+      <!-- Main text input for icon search/storage -->
       {% include "django/forms/widgets/text.html" %}
-      
-      <!-- Color picker input with improved attributes -->
-      <input 
-        class="{{ widget.attrs.class|default:'' }}" 
-        id="color" 
-        name="icon_color"
-        value="{{ default_color|default:'#00bcc9' }}" 
-        type="text" 
-        data-coloris 
-        style="margin-left: 10px; min-width: 80px;"
-        aria-label="Icon color picker"
-        title="Select icon color"
+
+      <!-- Color picker with enhanced attributes -->
+      <input class="{{ widget.attrs.class|default:'' }}" id="color" name="icon_color"
+        value="{{ default_color|default:'#00bcc9' }}" type="text" data-coloris
+        style="margin-left: 10px; min-width: 80px;" aria-label="Icon color picker" title="Select icon color"
         placeholder="#00bcc9">
     </div>
-    
-    <!-- Results container with better accessibility -->
-    <div 
-      id="results" 
-      class="icon-search-results"
-      role="listbox"
-      aria-label="Icon search results"
-      aria-live="polite">
+
+    <!-- Storage info display -->
+    {% if uses_cloud_storage %}
+    <div class="storage-info" style="font-size: 11px; color: #666; margin-top: 2px;">
+      <i>Using {{ storage_type }} for icon storage</i>
     </div>
-    
-    <!-- Error message container -->
-    <div 
-      id="icon-picker-error" 
-      class="icon-picker-error" 
-      style="display: none; color: #dc3545; margin-top: 5px;"
-      role="alert"
-      aria-live="assertive">
+    {% endif %}
+
+    <!-- Results container with better accessibility -->
+    <div id="results" class="icon-search-results" role="listbox" aria-label="Icon search results" aria-live="polite">
+    </div>
+
+    <!-- Enhanced error/message container -->
+    <div id="icon-picker-error" class="icon-picker-error"
+      style="display: none; color: #dc3545; margin-top: 5px; padding: 8px; background: #f8d7da; border: 1px solid #f1aeb5; border-radius: 4px;"
+      role="alert" aria-live="assertive">
     </div>
   </div>
 </div>
@@ -54,23 +44,78 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     try {
-      // Enhanced initialization with error handling
+      // Enhanced initialization with storage-aware options
       new IconPicker({
         searchInputId: "{{ widget.attrs.id }}",
         savePath: "{{ save_path|default:'' }}",
         model: "{{ widget.attrs.model_name|default:'' }}",
         objectId: "{{ object_id|default:'' }}",
-        defaultColor: "{{ default_color|default:'#00bcc9' }}"
+        defaultColor: "{{ default_color|default:'#00bcc9' }}",
+        usesCloudStorage: "{% if uses_cloud_storage %}true{% else %}false{% endif %}",
+        storageType: "{{ storage_type|default:'FileSystemStorage' }}"
       });
     } catch (error) {
       console.error("Failed to initialize IconPicker:", error);
-      
+
       // Show user-friendly error message
       const errorDiv = document.getElementById("icon-picker-error");
       if (errorDiv) {
-        errorDiv.textContent = "Failed to load icon picker. Please refresh the page.";
+        errorDiv.innerHTML = `
+          <strong>Icon Picker Error:</strong> Failed to load. 
+          <br><small>Please refresh the page or contact support if the problem persists.</small>
+        `;
         errorDiv.style.display = "block";
       }
     }
   });
 </script>
+
+<style>
+  /* Additional styles for storage-aware features */
+  .icon-picker-message {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .storage-info {
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  .icon-preview {
+    background: #f9f9f9;
+  }
+
+  .dark .icon-preview,
+  [data-theme="dark"] .icon-preview {
+    background: #444;
+    border-color: #555;
+  }
+
+  /* Loading state for cloud storage */
+  .icon-preview.loading {
+    opacity: 0.6;
+    animation: pulse 1.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    from {
+      opacity: 0.6;
+    }
+
+    to {
+      opacity: 0.9;
+    }
+  }
+</style>

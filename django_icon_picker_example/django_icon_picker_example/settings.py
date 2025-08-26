@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_icon_picker",
+    "storages",
     "example",
 ]
 
@@ -123,6 +124,7 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+# Basic configuration (works with any storage backend)
 ICON_PICKER_PATH = "media"
 ICON_PICKER_COLOR = "#00bcc9"
 
@@ -130,3 +132,95 @@ ICON_PICKER_COLOR = "#00bcc9"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Django Settings Examples for Icon Picker with Django-storages
+
+# Example 1: AWS S3 Storage
+# pip install django-storages[boto3]
+ICON_PICKER_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+# S3 Configuration
+# AWS_ACCESS_KEY_ID = 'your-access-key'
+# AWS_SECRET_ACCESS_KEY = 'your-secret-key'
+# AWS_STORAGE_BUCKET_NAME = 'your-bucket-name'
+# AWS_S3_REGION_NAME = 'us-east-1'
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+
+# Example 2: Google Cloud Storage
+# pip install django-storages[google]
+# ICON_PICKER_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+# GCS Configuration
+# GS_BUCKET_NAME = 'your-bucket-name'
+# GS_PROJECT_ID = 'your-project-id'
+# GS_DEFAULT_ACL = 'publicRead'
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+#     "path/to/your/service-account-key.json"
+# )
+
+# Example 3: Azure Blob Storage
+# pip install django-storages[azure]
+# ICON_PICKER_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+# Azure Configuration
+# AZURE_ACCOUNT_NAME = 'your-account-name'
+# AZURE_ACCOUNT_KEY = 'your-account-key'
+# AZURE_CONTAINER = 'your-container-name'
+# AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+
+# Example 4: DigitalOcean Spaces
+# pip install django-storages[boto3]
+# ICON_PICKER_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# DO Spaces Configuration
+# AWS_ACCESS_KEY_ID = 'your-spaces-key'
+# AWS_SECRET_ACCESS_KEY = 'your-spaces-secret'
+# AWS_STORAGE_BUCKET_NAME = 'your-space-name'
+# AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+# AWS_S3_REGION_NAME = 'nyc3'
+# AWS_DEFAULT_ACL = 'public-read'
+
+# Example 5: Custom Storage Backend
+# You can also pass a storage instance directly
+# from django.core.files.storage import FileSystemStorage
+# import os
+
+# Custom local storage with different base path
+# ICON_STORAGE = FileSystemStorage(
+# location=os.path.join(BASE_DIR, 'custom_icons'),
+# base_url='/custom_icons/'
+# )
+# ICON_PICKER_STORAGE = ICON_STORAGE
+
+# Example 6: CDN Integration (with S3 + CloudFront)
+# ICON_PICKER_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_S3_CUSTOM_DOMAIN = 'your-cdn-domain.cloudfront.net'
+
+# Example 7: Multiple Storage Backends
+# You can even create different storage for different environments
+# import os
+# from django.conf import settings
+
+# if settings.DEBUG:
+# Use local storage in development
+# ICON_PICKER_STORAGE = None  # Uses default_storage
+# else:
+# Use cloud storage in production
+# ICON_PICKER_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Security Settings for Production
+# SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Optional: Custom permissions
+# For icons that should be publicly accessible
+# AWS_DEFAULT_ACL = 'public-read'
+
+# For private icons (requires signed URLs)
+# AWS_DEFAULT_ACL = 'private'
+# AWS_QUERYSTRING_AUTH = True
+# AWS_QUERYSTRING_EXPIRE = 3600  # 1 hour
